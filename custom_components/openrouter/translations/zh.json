@@ -1,0 +1,115 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "OpenRouter Monitor",
+        "description": "请输入您的 OpenRouter Management API 密钥。\n\n您可以在[此处](https://openrouter.ai/settings/management-keys)创建 Management API 密钥。",
+        "data": {
+          "api_key": "Management API 密钥"
+        }
+      },
+      "settings": {
+        "title": "设置",
+        "data": {
+          "update_interval": "更新间隔（分钟）",
+          "exchange_rate_mode": "汇率模式",
+          "currency": "货币"
+        }
+      },
+      "fixed_rate": {
+        "title": "固定汇率",
+        "data": {
+          "fixed_exchange_rate": "汇率 (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "汇率传感器",
+        "data": {
+          "exchange_rate_entity": "汇率传感器实体"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "无法连接到 OpenRouter API。",
+      "invalid_auth": "API 密钥无效或权限不足。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_usage": { "name": "总使用量" },
+      "total_usage_converted": { "name": "总使用量 ({currency})" },
+      "balance": { "name": "余额" },
+      "balance_converted": { "name": "余额 ({currency})" },
+      "total_usage_daily": { "name": "每日总使用量" },
+      "total_usage_daily_converted": { "name": "每日总使用量 ({currency})" },
+      "total_usage_weekly": { "name": "每周总使用量" },
+      "total_usage_weekly_converted": { "name": "每周总使用量 ({currency})" },
+      "total_usage_monthly": { "name": "每月总使用量" },
+      "total_usage_monthly_converted": { "name": "每月总使用量 ({currency})" },
+      "usage": { "name": "使用量" },
+      "usage_converted": { "name": "使用量 ({currency})" },
+      "usage_daily": { "name": "每日使用量" },
+      "usage_daily_converted": { "name": "每日使用量 ({currency})" },
+      "usage_weekly": { "name": "每周使用量" },
+      "usage_weekly_converted": { "name": "每周使用量 ({currency})" },
+      "usage_monthly": { "name": "每月使用量" },
+      "usage_monthly_converted": { "name": "每月使用量 ({currency})" },
+      "limit": { "name": "限额" },
+      "limit_converted": { "name": "限额 ({currency})" },
+      "limit_remaining": { "name": "剩余限额" },
+      "limit_remaining_converted": { "name": "剩余限额 ({currency})" }
+    }
+  },
+  "selector": {
+    "currency": {
+      "options": {
+        "USD": "USD - 美元",
+        "EUR": "EUR - 欧元",
+        "GBP": "GBP - 英镑",
+        "JPY": "JPY - 日元",
+        "KRW": "KRW - 韩元",
+        "CNY": "CNY - 人民币",
+        "CAD": "CAD - 加拿大元",
+        "AUD": "AUD - 澳大利亚元",
+        "CHF": "CHF - 瑞士法郎",
+        "HKD": "HKD - 港元",
+        "SGD": "SGD - 新加坡元",
+        "TWD": "TWD - 新台币",
+        "INR": "INR - 印度卢比",
+        "THB": "THB - 泰铢",
+        "VND": "VND - 越南盾"
+      }
+    },
+    "exchange_rate_mode": {
+      "options": {
+        "none": "无（仅 USD）",
+        "fixed": "固定汇率",
+        "sensor": "传感器"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "设置",
+        "data": {
+          "update_interval": "更新间隔（分钟）",
+          "exchange_rate_mode": "汇率模式",
+          "currency": "货币"
+        }
+      },
+      "fixed_rate": {
+        "title": "固定汇率",
+        "data": {
+          "fixed_exchange_rate": "汇率 (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "汇率传感器",
+        "data": {
+          "exchange_rate_entity": "汇率传感器实体"
+        }
+      }
+    }
+  }
+}

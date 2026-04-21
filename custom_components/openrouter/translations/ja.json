@@ -1,0 +1,115 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "OpenRouter Monitor",
+        "description": "OpenRouter Management APIキーを入力してください。\n\n[こちら](https://openrouter.ai/settings/management-keys)からManagement APIキーを発行できます。",
+        "data": {
+          "api_key": "Management APIキー"
+        }
+      },
+      "settings": {
+        "title": "設定",
+        "data": {
+          "update_interval": "更新間隔（分）",
+          "exchange_rate_mode": "為替レートモード",
+          "currency": "通貨"
+        }
+      },
+      "fixed_rate": {
+        "title": "固定為替レート",
+        "data": {
+          "fixed_exchange_rate": "為替レート (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "為替レートセンサー",
+        "data": {
+          "exchange_rate_entity": "為替レートセンサーエンティティ"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "OpenRouter APIに接続できません。",
+      "invalid_auth": "APIキーが無効、または権限が不足しています。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_usage": { "name": "合計使用量" },
+      "total_usage_converted": { "name": "合計使用量 ({currency})" },
+      "balance": { "name": "残高" },
+      "balance_converted": { "name": "残高 ({currency})" },
+      "total_usage_daily": { "name": "合計日次使用量" },
+      "total_usage_daily_converted": { "name": "合計日次使用量 ({currency})" },
+      "total_usage_weekly": { "name": "合計週次使用量" },
+      "total_usage_weekly_converted": { "name": "合計週次使用量 ({currency})" },
+      "total_usage_monthly": { "name": "合計月次使用量" },
+      "total_usage_monthly_converted": { "name": "合計月次使用量 ({currency})" },
+      "usage": { "name": "使用量" },
+      "usage_converted": { "name": "使用量 ({currency})" },
+      "usage_daily": { "name": "日次使用量" },
+      "usage_daily_converted": { "name": "日次使用量 ({currency})" },
+      "usage_weekly": { "name": "週次使用量" },
+      "usage_weekly_converted": { "name": "週次使用量 ({currency})" },
+      "usage_monthly": { "name": "月次使用量" },
+      "usage_monthly_converted": { "name": "月次使用量 ({currency})" },
+      "limit": { "name": "上限" },
+      "limit_converted": { "name": "上限 ({currency})" },
+      "limit_remaining": { "name": "残り上限" },
+      "limit_remaining_converted": { "name": "残り上限 ({currency})" }
+    }
+  },
+  "selector": {
+    "currency": {
+      "options": {
+        "USD": "USD - 米ドル",
+        "EUR": "EUR - ユーロ",
+        "GBP": "GBP - 英ポンド",
+        "JPY": "JPY - 日本円",
+        "KRW": "KRW - 韓国ウォン",
+        "CNY": "CNY - 中国元",
+        "CAD": "CAD - カナダドル",
+        "AUD": "AUD - 豪ドル",
+        "CHF": "CHF - スイスフラン",
+        "HKD": "HKD - 香港ドル",
+        "SGD": "SGD - シンガポールドル",
+        "TWD": "TWD - 台湾ドル",
+        "INR": "INR - インドルピー",
+        "THB": "THB - タイバーツ",
+        "VND": "VND - ベトナムドン"
+      }
+    },
+    "exchange_rate_mode": {
+      "options": {
+        "none": "なし（USDのみ）",
+        "fixed": "固定レート",
+        "sensor": "センサー"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "設定",
+        "data": {
+          "update_interval": "更新間隔（分）",
+          "exchange_rate_mode": "為替レートモード",
+          "currency": "通貨"
+        }
+      },
+      "fixed_rate": {
+        "title": "固定為替レート",
+        "data": {
+          "fixed_exchange_rate": "為替レート (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "為替レートセンサー",
+        "data": {
+          "exchange_rate_entity": "為替レートセンサーエンティティ"
+        }
+      }
+    }
+  }
+}

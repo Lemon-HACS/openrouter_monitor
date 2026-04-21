@@ -1,11 +1,14 @@
 # OpenRouter Monitor
 
 Home Assistant에서 [OpenRouter](https://openrouter.ai) 잔액과 사용량을 모니터링합니다.
+Monitor your [OpenRouter](https://openrouter.ai) balance and usage in Home Assistant.
 
-- 잔액 / 일별 / 주별 / 월별 사용량 추적
-- API Key별 독립 디바이스로 분리
-- 15개 주요 통화 환율 변환
-- 한국어/영어 지원
+- 잔액 / 일별 / 주별 / 월별 사용량 추적 | Balance / daily / weekly / monthly usage tracking
+- API Key별 독립 디바이스로 분리 | Separate device per API Key
+- 15개 주요 통화 환율 변환 | Exchange rate conversion for 15 major currencies
+- 한국어 / English / 日本語 / 中文
+
+[English](docs/README_en.md) | [日本語](docs/README_ja.md) | [中文](docs/README_zh.md)
 
 ---
 
