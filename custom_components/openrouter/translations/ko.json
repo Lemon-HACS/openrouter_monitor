@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "OpenRouter Monitor",
+        "description": "OpenRouter Management API 키를 입력하세요.",
+        "data": {
+          "api_key": "Management API 키"
+        }
+      },
+      "settings": {
+        "title": "설정",
+        "data": {
+          "update_interval": "업데이트 주기 (분)",
+          "exchange_rate_mode": "환율 모드"
+        }
+      },
+      "fixed_rate": {
+        "title": "고정 환율",
+        "data": {
+          "fixed_exchange_rate": "환율 (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "환율 센서",
+        "data": {
+          "exchange_rate_entity": "환율 센서 엔티티"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "OpenRouter API에 연결할 수 없습니다.",
+      "invalid_auth": "API 키가 유효하지 않거나 권한이 부족합니다."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "설정",
+        "data": {
+          "update_interval": "업데이트 주기 (분)",
+          "exchange_rate_mode": "환율 모드"
+        }
+      },
+      "fixed_rate": {
+        "title": "고정 환율",
+        "data": {
+          "fixed_exchange_rate": "환율 (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "환율 센서",
+        "data": {
+          "exchange_rate_entity": "환율 센서 엔티티"
+        }
+      }
+    }
+  }
+}
