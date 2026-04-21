@@ -150,12 +150,13 @@ async def async_setup_entry(
         else:
             key_label = f"Key {idx}"
         for desc in KEY_SENSORS:
-            sensor_name = f"{key_label} {KEY_SENSOR_NAMES[desc.key]}"
+            sensor_name = KEY_SENSOR_NAMES[desc.key]
             entities.append(
                 OpenRouterSensor(
                     coordinator, desc, entry,
                     name=sensor_name,
                     key_hash=key_hash,
+                    key_label=key_label,
                 )
             )
             if has_exchange:
@@ -164,6 +165,7 @@ async def async_setup_entry(
                         coordinator, desc, entry,
                         name=f"{sensor_name} ({currency})",
                         key_hash=key_hash,
+                        key_label=key_label,
                         converted=True,
                     )
                 )
@@ -183,12 +185,14 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
         *,
         name: str,
         key_hash: str | None = None,
+        key_label: str | None = None,
         converted: bool = False,
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
         self._entry = entry
         self._key_hash = key_hash
+        self._key_label = key_label
         self._converted = converted
 
         id_parts = [entry.entry_id]
@@ -210,6 +214,14 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
 
     @property
     def device_info(self) -> DeviceInfo:
+        if self._key_hash:
+            return DeviceInfo(
+                identifiers={(DOMAIN, f"{self._entry.entry_id}_{self._key_hash}")},
+                name=f"OpenRouter - {self._key_label}",
+                manufacturer="OpenRouter",
+                entry_type=DeviceEntryType.SERVICE,
+                via_device=(DOMAIN, self._entry.entry_id),
+            )
         return DeviceInfo(
             identifiers={(DOMAIN, self._entry.entry_id)},
             name="OpenRouter",
