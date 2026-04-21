@@ -1,0 +1,40 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "OpenRouter",
+        "description": "Enter your OpenRouter Management API key.",
+        "data": {
+          "api_key": "Management API Key"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to OpenRouter API.",
+      "invalid_auth": "Invalid API key or insufficient permissions."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Settings",
+        "data": {
+          "update_interval": "Update interval (minutes)",
+          "exchange_rate_mode": "Exchange rate mode"
+        }
+      },
+      "fixed_rate": {
+        "title": "Fixed Exchange Rate",
+        "data": {
+          "fixed_exchange_rate": "Exchange rate (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "Exchange Rate Sensor",
+        "data": {
+          "exchange_rate_entity": "Exchange rate sensor entity"
+        }
+      }
+    }
+  }
+}

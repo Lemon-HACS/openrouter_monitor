@@ -1,0 +1,6 @@
+{
+  "name": "OpenRouter",
+  "render_readme": true,
+  "homeassistant": "2026.4.0",
+  "iot_class": "cloud_polling"
+}
