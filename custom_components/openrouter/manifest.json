@@ -1,7 +1,7 @@
 {
   "domain": "openrouter",
   "name": "OpenRouter Monitor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "codeowners": ["@LemonDouble"],
   "config_flow": true,
   "requirements": [],
