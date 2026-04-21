@@ -36,9 +36,7 @@
   },
   "entity": {
     "sensor": {
-      "total_credits": { "name": "총 크레딧" },
-      "total_credits_converted": { "name": "총 크레딧 ({currency})" },
-      "total_usage": { "name": "총 사용량" },
+"total_usage": { "name": "총 사용량" },
       "total_usage_converted": { "name": "총 사용량 ({currency})" },
       "balance": { "name": "잔액" },
       "balance_converted": { "name": "잔액 ({currency})" },

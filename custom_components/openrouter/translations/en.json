@@ -36,9 +36,7 @@
   },
   "entity": {
     "sensor": {
-      "total_credits": { "name": "Total Credits" },
-      "total_credits_converted": { "name": "Total Credits ({currency})" },
-      "total_usage": { "name": "Total Usage" },
+"total_usage": { "name": "Total Usage" },
       "total_usage_converted": { "name": "Total Usage ({currency})" },
       "balance": { "name": "Balance" },
       "balance_converted": { "name": "Balance ({currency})" },

@@ -37,12 +37,6 @@ class OpenRouterSensorDescription(SensorEntityDescription):
 
 ACCOUNT_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
     OpenRouterSensorDescription(
-        key="total_credits",
-        value_fn=lambda d: d.get("credits", {}).get("total_credits"),
-        state_class=SensorStateClass.TOTAL,
-        suggested_display_precision=4,
-    ),
-    OpenRouterSensorDescription(
         key="total_usage",
         value_fn=lambda d: d.get("credits", {}).get("total_usage"),
         state_class=SensorStateClass.TOTAL_INCREASING,
