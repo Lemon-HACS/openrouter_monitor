@@ -54,7 +54,7 @@ ACCOUNT_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
             - (d.get("credits", {}).get("total_usage") or 0),
             10,
         ),
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL,
         suggested_display_precision=4,
     ),
 )
@@ -75,19 +75,19 @@ KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
     OpenRouterSensorDescription(
         key="usage_daily",
         value_fn=lambda d: d.get("usage_daily"),
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL,
         suggested_display_precision=4,
     ),
     OpenRouterSensorDescription(
         key="usage_weekly",
         value_fn=lambda d: d.get("usage_weekly"),
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL,
         suggested_display_precision=4,
     ),
     OpenRouterSensorDescription(
         key="usage_monthly",
         value_fn=lambda d: d.get("usage_monthly"),
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL,
         suggested_display_precision=4,
     ),
     OpenRouterSensorDescription(
@@ -99,7 +99,7 @@ KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
     OpenRouterSensorDescription(
         key="limit_remaining",
         value_fn=lambda d: d.get("limit_remaining"),
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL,
         suggested_display_precision=2,
     ),
 )
