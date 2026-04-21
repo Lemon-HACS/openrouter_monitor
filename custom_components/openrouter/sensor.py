@@ -58,6 +58,24 @@ ACCOUNT_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
         state_class=SensorStateClass.TOTAL,
         suggested_display_precision=4,
     ),
+    OpenRouterSensorDescription(
+        key="total_usage_daily",
+        value_fn=lambda d: sum(k.get("usage_daily") or 0 for k in d.get("keys", [])),
+        state_class=SensorStateClass.TOTAL,
+        suggested_display_precision=4,
+    ),
+    OpenRouterSensorDescription(
+        key="total_usage_weekly",
+        value_fn=lambda d: sum(k.get("usage_weekly") or 0 for k in d.get("keys", [])),
+        state_class=SensorStateClass.TOTAL,
+        suggested_display_precision=4,
+    ),
+    OpenRouterSensorDescription(
+        key="total_usage_monthly",
+        value_fn=lambda d: sum(k.get("usage_monthly") or 0 for k in d.get("keys", [])),
+        state_class=SensorStateClass.TOTAL,
+        suggested_display_precision=4,
+    ),
 )
 
 KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
