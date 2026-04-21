@@ -20,7 +20,7 @@ Management API Key를 통해 크레딧 잔액, API Key별 사용량을 센서로
 ### HACS를 통한 설치 (권장)
 
 1. HACS → 통합 구성요소 → 우측 상단 메뉴 → **사용자 지정 저장소 추가**
-2. URL: `https://github.com/Lemon-HACS/hass-openrouter`, 카테고리: `통합 구성요소`
+2. URL: `https://github.com/Lemon-HACS/openrouter_monitor`, 카테고리: `통합 구성요소`
 3. **OpenRouter** 검색 후 다운로드
 4. Home Assistant 재시작
 
