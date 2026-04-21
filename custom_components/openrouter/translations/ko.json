@@ -34,6 +34,28 @@
       "invalid_auth": "API 키가 유효하지 않거나 권한이 부족합니다."
     }
   },
+  "entity": {
+    "sensor": {
+      "total_credits": { "name": "총 크레딧" },
+      "total_credits_converted": { "name": "총 크레딧 ({currency})" },
+      "total_usage": { "name": "총 사용량" },
+      "total_usage_converted": { "name": "총 사용량 ({currency})" },
+      "balance": { "name": "잔액" },
+      "balance_converted": { "name": "잔액 ({currency})" },
+      "usage": { "name": "사용량" },
+      "usage_converted": { "name": "사용량 ({currency})" },
+      "usage_daily": { "name": "일일 사용량" },
+      "usage_daily_converted": { "name": "일일 사용량 ({currency})" },
+      "usage_weekly": { "name": "주간 사용량" },
+      "usage_weekly_converted": { "name": "주간 사용량 ({currency})" },
+      "usage_monthly": { "name": "월간 사용량" },
+      "usage_monthly_converted": { "name": "월간 사용량 ({currency})" },
+      "limit": { "name": "한도" },
+      "limit_converted": { "name": "한도 ({currency})" },
+      "limit_remaining": { "name": "남은 한도" },
+      "limit_remaining_converted": { "name": "남은 한도 ({currency})" }
+    }
+  },
   "selector": {
     "currency": {
       "options": {

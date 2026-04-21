@@ -60,12 +60,6 @@ ACCOUNT_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
     ),
 )
 
-ACCOUNT_SENSOR_NAMES: dict[str, str] = {
-    "total_credits": "Total Credits",
-    "total_usage": "Total Usage",
-    "balance": "Balance",
-}
-
 KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
     OpenRouterSensorDescription(
         key="usage",
@@ -105,16 +99,6 @@ KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
     ),
 )
 
-KEY_SENSOR_NAMES: dict[str, str] = {
-    "usage": "Usage",
-    "usage_daily": "Daily Usage",
-    "usage_weekly": "Weekly Usage",
-    "usage_monthly": "Monthly Usage",
-    "limit": "Limit",
-    "limit_remaining": "Limit Remaining",
-}
-
-
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -128,14 +112,12 @@ async def async_setup_entry(
     entities: list[OpenRouterSensor] = []
 
     for desc in ACCOUNT_SENSORS:
-        name = ACCOUNT_SENSOR_NAMES[desc.key]
-        entities.append(OpenRouterSensor(coordinator, desc, entry, name=name))
+        entities.append(OpenRouterSensor(coordinator, desc, entry))
         if has_exchange:
             entities.append(
                 OpenRouterSensor(
                     coordinator, desc, entry,
-                    name=f"{name} ({currency})",
-                    converted=True,
+                    converted=True, currency=currency,
                 )
             )
 
@@ -150,23 +132,18 @@ async def async_setup_entry(
         else:
             key_label = f"Key {idx}"
         for desc in KEY_SENSORS:
-            sensor_name = KEY_SENSOR_NAMES[desc.key]
             entities.append(
                 OpenRouterSensor(
                     coordinator, desc, entry,
-                    name=sensor_name,
-                    key_hash=key_hash,
-                    key_label=key_label,
+                    key_hash=key_hash, key_label=key_label,
                 )
             )
             if has_exchange:
                 entities.append(
                     OpenRouterSensor(
                         coordinator, desc, entry,
-                        name=f"{sensor_name} ({currency})",
-                        key_hash=key_hash,
-                        key_label=key_label,
-                        converted=True,
+                        key_hash=key_hash, key_label=key_label,
+                        converted=True, currency=currency,
                     )
                 )
 
@@ -183,10 +160,10 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
         description: OpenRouterSensorDescription,
         entry: ConfigEntry,
         *,
-        name: str,
         key_hash: str | None = None,
         key_label: str | None = None,
         converted: bool = False,
+        currency: str = "USD",
     ) -> None:
         super().__init__(coordinator)
         self.entity_description = description
@@ -202,14 +179,14 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
         if converted:
             id_parts.append("converted")
         self._attr_unique_id = "_".join(id_parts)
-        self._attr_name = name
 
         if converted:
-            self._attr_native_unit_of_measurement = entry.options.get(
-                CONF_CURRENCY, coordinator.hass.config.currency
-            )
+            self._attr_translation_key = f"{description.key}_converted"
+            self._attr_translation_placeholders = {"currency": currency}
+            self._attr_native_unit_of_measurement = currency
             self._attr_suggested_display_precision = 0
         else:
+            self._attr_translation_key = description.key
             self._attr_native_unit_of_measurement = "USD"
 
     @property

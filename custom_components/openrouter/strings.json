@@ -34,6 +34,28 @@
       "invalid_auth": "Invalid API key or insufficient permissions."
     }
   },
+  "entity": {
+    "sensor": {
+      "total_credits": { "name": "Total Credits" },
+      "total_credits_converted": { "name": "Total Credits ({currency})" },
+      "total_usage": { "name": "Total Usage" },
+      "total_usage_converted": { "name": "Total Usage ({currency})" },
+      "balance": { "name": "Balance" },
+      "balance_converted": { "name": "Balance ({currency})" },
+      "usage": { "name": "Usage" },
+      "usage_converted": { "name": "Usage ({currency})" },
+      "usage_daily": { "name": "Daily Usage" },
+      "usage_daily_converted": { "name": "Daily Usage ({currency})" },
+      "usage_weekly": { "name": "Weekly Usage" },
+      "usage_weekly_converted": { "name": "Weekly Usage ({currency})" },
+      "usage_monthly": { "name": "Monthly Usage" },
+      "usage_monthly_converted": { "name": "Monthly Usage ({currency})" },
+      "limit": { "name": "Limit" },
+      "limit_converted": { "name": "Limit ({currency})" },
+      "limit_remaining": { "name": "Limit Remaining" },
+      "limit_remaining_converted": { "name": "Limit Remaining ({currency})" }
+    }
+  },
   "selector": {
     "currency": {
       "options": {
