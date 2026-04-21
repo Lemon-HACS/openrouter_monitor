@@ -1,7 +1,7 @@
-# OpenRouter
+# OpenRouter Monitor
 
 Home Assistant용 [OpenRouter](https://openrouter.ai) 커스텀 통합 구성요소입니다.
-Management API Key를 통해 크레딧 잔액, API Key별 사용량을 센서로 모니터링할 수 있습니다.
+Management API Key를 통해 크레딧 잔액, API Key�� 사용량��� 센서로 모니터링��� 수 있습니다.
 
 ---
 
