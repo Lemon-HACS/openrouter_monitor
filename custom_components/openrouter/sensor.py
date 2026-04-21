@@ -18,6 +18,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
+    CONF_CURRENCY,
     CONF_EXCHANGE_RATE_ENTITY,
     CONF_EXCHANGE_RATE_MODE,
     CONF_FIXED_EXCHANGE_RATE,
@@ -122,7 +123,7 @@ async def async_setup_entry(
     coordinator: OpenRouterCoordinator = hass.data[DOMAIN][entry.entry_id]
     exchange_mode = entry.options.get(CONF_EXCHANGE_RATE_MODE, EXCHANGE_RATE_NONE)
     has_exchange = exchange_mode != EXCHANGE_RATE_NONE
-    currency = hass.config.currency
+    currency = entry.options.get(CONF_CURRENCY, hass.config.currency)
 
     entities: list[OpenRouterSensor] = []
 
@@ -200,7 +201,9 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
         self._attr_name = name
 
         if converted:
-            self._attr_native_unit_of_measurement = coordinator.hass.config.currency
+            self._attr_native_unit_of_measurement = entry.options.get(
+                CONF_CURRENCY, coordinator.hass.config.currency
+            )
             self._attr_suggested_display_precision = 0
         else:
             self._attr_native_unit_of_measurement = "USD"

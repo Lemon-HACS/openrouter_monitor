@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "OpenRouter Monitor",
-        "description": "Enter your OpenRouter Management API key.",
+        "description": "Enter your OpenRouter Management API key.\n\nYou can create a Management API key [here](https://openrouter.ai/settings/management-keys).",
         "data": {
           "api_key": "Management API Key"
         }
@@ -12,7 +12,8 @@
         "title": "Settings",
         "data": {
           "update_interval": "Update interval (minutes)",
-          "exchange_rate_mode": "Exchange rate mode"
+          "exchange_rate_mode": "Exchange rate mode",
+          "currency": "Currency"
         }
       },
       "fixed_rate": {
@@ -33,13 +34,42 @@
       "invalid_auth": "Invalid API key or insufficient permissions."
     }
   },
+  "selector": {
+    "currency": {
+      "options": {
+        "USD": "USD - US Dollar",
+        "EUR": "EUR - Euro",
+        "GBP": "GBP - British Pound",
+        "JPY": "JPY - Japanese Yen",
+        "KRW": "KRW - South Korean Won",
+        "CNY": "CNY - Chinese Yuan",
+        "CAD": "CAD - Canadian Dollar",
+        "AUD": "AUD - Australian Dollar",
+        "CHF": "CHF - Swiss Franc",
+        "HKD": "HKD - Hong Kong Dollar",
+        "SGD": "SGD - Singapore Dollar",
+        "TWD": "TWD - Taiwan Dollar",
+        "INR": "INR - Indian Rupee",
+        "THB": "THB - Thai Baht",
+        "VND": "VND - Vietnamese Dong"
+      }
+    },
+    "exchange_rate_mode": {
+      "options": {
+        "none": "None (USD only)",
+        "fixed": "Fixed rate",
+        "sensor": "Sensor"
+      }
+    }
+  },
   "options": {
     "step": {
       "init": {
         "title": "Settings",
         "data": {
           "update_interval": "Update interval (minutes)",
-          "exchange_rate_mode": "Exchange rate mode"
+          "exchange_rate_mode": "Exchange rate mode",
+          "currency": "Currency"
         }
       },
       "fixed_rate": {

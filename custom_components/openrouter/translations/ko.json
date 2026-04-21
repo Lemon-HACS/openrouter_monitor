@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "OpenRouter Monitor",
-        "description": "OpenRouter Management API 키를 입력하세요.",
+        "description": "OpenRouter Management API 키를 입력하세요.\n\n[여기](https://openrouter.ai/settings/management-keys)에서 Management API 키를 발급받을 수 있습니다.",
         "data": {
           "api_key": "Management API 키"
         }
@@ -12,7 +12,8 @@
         "title": "설정",
         "data": {
           "update_interval": "업데이트 주기 (분)",
-          "exchange_rate_mode": "환율 모드"
+          "exchange_rate_mode": "환율 모드",
+          "currency": "통화"
         }
       },
       "fixed_rate": {
@@ -33,13 +34,42 @@
       "invalid_auth": "API 키가 유효하지 않거나 권한이 부족합니다."
     }
   },
+  "selector": {
+    "currency": {
+      "options": {
+        "USD": "USD - 미국 달러",
+        "EUR": "EUR - 유로",
+        "GBP": "GBP - 영국 파운드",
+        "JPY": "JPY - 일본 엔",
+        "KRW": "KRW - 한국 원",
+        "CNY": "CNY - 중국 위안",
+        "CAD": "CAD - 캐나다 달러",
+        "AUD": "AUD - 호주 달러",
+        "CHF": "CHF - 스위스 프랑",
+        "HKD": "HKD - 홍콩 달러",
+        "SGD": "SGD - 싱가포르 달러",
+        "TWD": "TWD - 대만 달러",
+        "INR": "INR - 인도 루피",
+        "THB": "THB - 태국 바트",
+        "VND": "VND - 베트남 동"
+      }
+    },
+    "exchange_rate_mode": {
+      "options": {
+        "none": "없음 (USD만 표시)",
+        "fixed": "고정 환율",
+        "sensor": "센서"
+      }
+    }
+  },
   "options": {
     "step": {
       "init": {
         "title": "설정",
         "data": {
           "update_interval": "업데이트 주기 (분)",
-          "exchange_rate_mode": "환율 모드"
+          "exchange_rate_mode": "환율 모드",
+          "currency": "통화"
         }
       },
       "fixed_rate": {

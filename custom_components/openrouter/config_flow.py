@@ -12,6 +12,7 @@ from homeassistant.helpers import selector
 from .const import (
     API_BASE_URL,
     CONF_API_KEY,
+    CONF_CURRENCY,
     CONF_EXCHANGE_RATE_ENTITY,
     CONF_EXCHANGE_RATE_MODE,
     CONF_FIXED_EXCHANGE_RATE,
@@ -23,27 +24,43 @@ from .const import (
     EXCHANGE_RATE_SENSOR,
 )
 
-EXCHANGE_RATE_OPTIONS = [
-    selector.SelectOptionDict(value=EXCHANGE_RATE_NONE, label="None (USD only)"),
-    selector.SelectOptionDict(value=EXCHANGE_RATE_FIXED, label="Fixed rate"),
-    selector.SelectOptionDict(value=EXCHANGE_RATE_SENSOR, label="Sensor"),
+EXCHANGE_RATE_OPTIONS = [EXCHANGE_RATE_NONE, EXCHANGE_RATE_FIXED, EXCHANGE_RATE_SENSOR]
+
+CURRENCY_OPTIONS = [
+    "USD", "EUR", "GBP", "JPY", "KRW", "CNY", "CAD", "AUD",
+    "CHF", "HKD", "SGD", "TWD", "INR", "THB", "VND",
 ]
 
 
 def _settings_schema(
     update_interval: int = DEFAULT_UPDATE_INTERVAL,
     exchange_rate_mode: str = EXCHANGE_RATE_NONE,
+    currency: str = "USD",
 ) -> vol.Schema:
     return vol.Schema(
         {
-            vol.Required(CONF_UPDATE_INTERVAL, default=update_interval): vol.All(
-                int, vol.Range(min=1, max=60)
+            vol.Required(
+                CONF_UPDATE_INTERVAL, default=update_interval
+            ): selector.NumberSelector(
+                selector.NumberSelectorConfig(
+                    min=1, max=60, step=1, mode=selector.NumberSelectorMode.BOX
+                )
             ),
             vol.Required(
                 CONF_EXCHANGE_RATE_MODE, default=exchange_rate_mode
             ): selector.SelectSelector(
                 selector.SelectSelectorConfig(
                     options=EXCHANGE_RATE_OPTIONS,
+                    translation_key="exchange_rate_mode",
+                    mode=selector.SelectSelectorMode.DROPDOWN,
+                )
+            ),
+            vol.Required(
+                CONF_CURRENCY, default=currency
+            ): selector.SelectSelector(
+                selector.SelectSelectorConfig(
+                    options=CURRENCY_OPTIONS,
+                    translation_key="currency",
                     mode=selector.SelectSelectorMode.DROPDOWN,
                 )
             ),
@@ -51,7 +68,7 @@ def _settings_schema(
     )
 
 
-def _fixed_rate_schema(default: float = 1350.0) -> vol.Schema:
+def _fixed_rate_schema(default: float = 1450.0) -> vol.Schema:
     return vol.Schema(
         {vol.Required(CONF_FIXED_EXCHANGE_RATE, default=default): vol.Coerce(float)}
     )
@@ -122,7 +139,9 @@ class OpenRouterConfigFlow(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="settings",
-            data_schema=_settings_schema(),
+            data_schema=_settings_schema(
+                currency=self.hass.config.currency,
+            ),
         )
 
     async def async_step_fixed_rate(self, user_input=None):
@@ -185,6 +204,9 @@ class OpenRouterOptionsFlow(OptionsFlow):
                 exchange_rate_mode=self._options.get(
                     CONF_EXCHANGE_RATE_MODE, EXCHANGE_RATE_NONE
                 ),
+                currency=self._options.get(
+                    CONF_CURRENCY, self.hass.config.currency
+                ),
             ),
         )
 
@@ -197,7 +219,7 @@ class OpenRouterOptionsFlow(OptionsFlow):
         return self.async_show_form(
             step_id="fixed_rate",
             data_schema=_fixed_rate_schema(
-                default=self._options.get(CONF_FIXED_EXCHANGE_RATE, 1350.0)
+                default=self._options.get(CONF_FIXED_EXCHANGE_RATE, 1450.0)
             ),
         )
 
