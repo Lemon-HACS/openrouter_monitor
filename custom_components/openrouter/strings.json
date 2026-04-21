@@ -57,7 +57,15 @@
       "limit": { "name": "Limit" },
       "limit_converted": { "name": "Limit ({currency})" },
       "limit_remaining": { "name": "Limit Remaining" },
-      "limit_remaining_converted": { "name": "Limit Remaining ({currency})" }
+      "limit_remaining_converted": { "name": "Limit Remaining ({currency})" },
+      "limit_reset": {
+        "name": "Limit Reset Period",
+        "state": {
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly"
+        }
+      }
     }
   },
   "selector": {

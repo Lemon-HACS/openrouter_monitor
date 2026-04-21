@@ -57,7 +57,15 @@
       "limit": { "name": "限额" },
       "limit_converted": { "name": "限额 ({currency})" },
       "limit_remaining": { "name": "剩余限额" },
-      "limit_remaining_converted": { "name": "剩余限额 ({currency})" }
+      "limit_remaining_converted": { "name": "剩余限额 ({currency})" },
+      "limit_reset": {
+        "name": "限额重置周期",
+        "state": {
+          "daily": "每日",
+          "weekly": "每周",
+          "monthly": "每月"
+        }
+      }
     }
   },
   "selector": {

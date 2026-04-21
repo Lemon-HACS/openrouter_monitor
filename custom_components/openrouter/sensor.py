@@ -32,7 +32,7 @@ from .coordinator import OpenRouterCoordinator
 
 @dataclass(frozen=True, kw_only=True)
 class OpenRouterSensorDescription(SensorEntityDescription):
-    value_fn: Callable[[dict], float | None]
+    value_fn: Callable[[dict], float | str | None]
 
 
 ACCOUNT_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
@@ -109,6 +109,14 @@ KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
         state_class=SensorStateClass.TOTAL,
         suggested_display_precision=2,
     ),
+    OpenRouterSensorDescription(
+        key="limit_reset",
+        value_fn=lambda d: d.get("limit_reset"),
+        device_class=SensorDeviceClass.ENUM,
+        options=["daily", "weekly", "monthly"],
+        state_class=None,
+        suggested_display_precision=None,
+    ),
 )
 
 async def async_setup_entry(
@@ -150,7 +158,7 @@ async def async_setup_entry(
                     key_hash=key_hash, key_label=key_label,
                 )
             )
-            if has_exchange:
+            if has_exchange and desc.device_class != SensorDeviceClass.ENUM:
                 entities.append(
                     OpenRouterSensor(
                         coordinator, desc, entry,
@@ -192,7 +200,11 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
             id_parts.append("converted")
         self._attr_unique_id = "_".join(id_parts)
 
-        if converted:
+        if description.device_class == SensorDeviceClass.ENUM:
+            self._attr_device_class = SensorDeviceClass.ENUM
+            self._attr_translation_key = description.key
+            self._attr_options = description.options
+        elif converted:
             self._attr_translation_key = f"{description.key}_converted"
             self._attr_translation_placeholders = {"currency": currency}
             self._attr_native_unit_of_measurement = currency
@@ -244,7 +256,7 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
         return None
 
     @property
-    def native_value(self) -> float | None:
+    def native_value(self) -> float | str | None:
         data = self._get_source_data()
         if data is None:
             return None

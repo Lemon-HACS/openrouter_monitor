@@ -57,7 +57,15 @@
       "limit": { "name": "한도" },
       "limit_converted": { "name": "한도 ({currency})" },
       "limit_remaining": { "name": "남은 한도" },
-      "limit_remaining_converted": { "name": "남은 한도 ({currency})" }
+      "limit_remaining_converted": { "name": "남은 한도 ({currency})" },
+      "limit_reset": {
+        "name": "한도 초기화 주기",
+        "state": {
+          "daily": "매일",
+          "weekly": "매주",
+          "monthly": "매월"
+        }
+      }
     }
   },
   "selector": {
