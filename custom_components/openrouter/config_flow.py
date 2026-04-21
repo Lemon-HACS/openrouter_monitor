@@ -23,9 +23,53 @@ from .const import (
     EXCHANGE_RATE_SENSOR,
 )
 
+EXCHANGE_RATE_OPTIONS = [
+    selector.SelectOptionDict(value=EXCHANGE_RATE_NONE, label="None (USD only)"),
+    selector.SelectOptionDict(value=EXCHANGE_RATE_FIXED, label="Fixed rate"),
+    selector.SelectOptionDict(value=EXCHANGE_RATE_SENSOR, label="Sensor"),
+]
+
+
+def _settings_schema(
+    update_interval: int = DEFAULT_UPDATE_INTERVAL,
+    exchange_rate_mode: str = EXCHANGE_RATE_NONE,
+) -> vol.Schema:
+    return vol.Schema(
+        {
+            vol.Required(CONF_UPDATE_INTERVAL, default=update_interval): vol.All(
+                int, vol.Range(min=1, max=60)
+            ),
+            vol.Required(
+                CONF_EXCHANGE_RATE_MODE, default=exchange_rate_mode
+            ): selector.SelectSelector(
+                selector.SelectSelectorConfig(
+                    options=EXCHANGE_RATE_OPTIONS,
+                    mode=selector.SelectSelectorMode.DROPDOWN,
+                )
+            ),
+        }
+    )
+
+
+def _fixed_rate_schema(default: float = 1350.0) -> vol.Schema:
+    return vol.Schema(
+        {vol.Required(CONF_FIXED_EXCHANGE_RATE, default=default): vol.Coerce(float)}
+    )
+
+
+def _sensor_rate_schema(default: str | None = None) -> vol.Schema:
+    return vol.Schema(
+        {
+            vol.Required(
+                CONF_EXCHANGE_RATE_ENTITY, default=default
+            ): selector.EntitySelector(
+                selector.EntitySelectorConfig(domain="sensor")
+            ),
+        }
+    )
+
 
 async def _validate_api_key(hass, api_key: str) -> str | None:
-    """Return error key or None if valid."""
     session = async_get_clientsession(hass)
     try:
         async with session.get(
@@ -46,6 +90,10 @@ class OpenRouterConfigFlow(ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
+    def __init__(self) -> None:
+        self._api_key: str = ""
+        self._options: dict = {}
+
     async def async_step_user(self, user_input=None):
         errors = {}
         if user_input is not None:
@@ -53,17 +101,55 @@ class OpenRouterConfigFlow(ConfigFlow, domain=DOMAIN):
             if error:
                 errors["base"] = error
             else:
-                return self.async_create_entry(
-                    title="OpenRouter",
-                    data={CONF_API_KEY: user_input[CONF_API_KEY]},
-                )
+                self._api_key = user_input[CONF_API_KEY]
+                return await self.async_step_settings()
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema(
-                {vol.Required(CONF_API_KEY): str}
-            ),
+            data_schema=vol.Schema({vol.Required(CONF_API_KEY): str}),
             errors=errors,
+        )
+
+    async def async_step_settings(self, user_input=None):
+        if user_input is not None:
+            self._options.update(user_input)
+            mode = user_input[CONF_EXCHANGE_RATE_MODE]
+            if mode == EXCHANGE_RATE_FIXED:
+                return await self.async_step_fixed_rate()
+            if mode == EXCHANGE_RATE_SENSOR:
+                return await self.async_step_sensor_rate()
+            return self._create_entry()
+
+        return self.async_show_form(
+            step_id="settings",
+            data_schema=_settings_schema(),
+        )
+
+    async def async_step_fixed_rate(self, user_input=None):
+        if user_input is not None:
+            self._options.update(user_input)
+            return self._create_entry()
+
+        return self.async_show_form(
+            step_id="fixed_rate",
+            data_schema=_fixed_rate_schema(),
+        )
+
+    async def async_step_sensor_rate(self, user_input=None):
+        if user_input is not None:
+            self._options.update(user_input)
+            return self._create_entry()
+
+        return self.async_show_form(
+            step_id="sensor_rate",
+            data_schema=_sensor_rate_schema(),
+        )
+
+    def _create_entry(self):
+        return self.async_create_entry(
+            title="OpenRouter Monitor",
+            data={CONF_API_KEY: self._api_key},
+            options=self._options,
         )
 
     @staticmethod
@@ -92,39 +178,13 @@ class OpenRouterOptionsFlow(OptionsFlow):
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(
-                        CONF_UPDATE_INTERVAL,
-                        default=self._options.get(
-                            CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL
-                        ),
-                    ): vol.All(int, vol.Range(min=1, max=60)),
-                    vol.Required(
-                        CONF_EXCHANGE_RATE_MODE,
-                        default=self._options.get(
-                            CONF_EXCHANGE_RATE_MODE, EXCHANGE_RATE_NONE
-                        ),
-                    ): selector.SelectSelector(
-                        selector.SelectSelectorConfig(
-                            options=[
-                                selector.SelectOptionDict(
-                                    value=EXCHANGE_RATE_NONE,
-                                    label="None (USD only)",
-                                ),
-                                selector.SelectOptionDict(
-                                    value=EXCHANGE_RATE_FIXED,
-                                    label="Fixed rate",
-                                ),
-                                selector.SelectOptionDict(
-                                    value=EXCHANGE_RATE_SENSOR,
-                                    label="Sensor",
-                                ),
-                            ],
-                            mode=selector.SelectSelectorMode.DROPDOWN,
-                        )
-                    ),
-                }
+            data_schema=_settings_schema(
+                update_interval=self._options.get(
+                    CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL
+                ),
+                exchange_rate_mode=self._options.get(
+                    CONF_EXCHANGE_RATE_MODE, EXCHANGE_RATE_NONE
+                ),
             ),
         )
 
@@ -136,13 +196,8 @@ class OpenRouterOptionsFlow(OptionsFlow):
 
         return self.async_show_form(
             step_id="fixed_rate",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(
-                        CONF_FIXED_EXCHANGE_RATE,
-                        default=self._options.get(CONF_FIXED_EXCHANGE_RATE, 1350.0),
-                    ): vol.Coerce(float),
-                }
+            data_schema=_fixed_rate_schema(
+                default=self._options.get(CONF_FIXED_EXCHANGE_RATE, 1350.0)
             ),
         )
 
@@ -154,14 +209,7 @@ class OpenRouterOptionsFlow(OptionsFlow):
 
         return self.async_show_form(
             step_id="sensor_rate",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(
-                        CONF_EXCHANGE_RATE_ENTITY,
-                        default=self._options.get(CONF_EXCHANGE_RATE_ENTITY),
-                    ): selector.EntitySelector(
-                        selector.EntitySelectorConfig(domain="sensor")
-                    ),
-                }
+            data_schema=_sensor_rate_schema(
+                default=self._options.get(CONF_EXCHANGE_RATE_ENTITY)
             ),
         )

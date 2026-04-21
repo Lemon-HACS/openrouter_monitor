@@ -7,6 +7,25 @@
         "data": {
           "api_key": "Management API Key"
         }
+      },
+      "settings": {
+        "title": "Settings",
+        "data": {
+          "update_interval": "Update interval (minutes)",
+          "exchange_rate_mode": "Exchange rate mode"
+        }
+      },
+      "fixed_rate": {
+        "title": "Fixed Exchange Rate",
+        "data": {
+          "fixed_exchange_rate": "Exchange rate (1 USD = ?)"
+        }
+      },
+      "sensor_rate": {
+        "title": "Exchange Rate Sensor",
+        "data": {
+          "exchange_rate_entity": "Exchange rate sensor entity"
+        }
       }
     },
     "error": {
