@@ -138,9 +138,16 @@ async def async_setup_entry(
                 )
             )
 
-    for key_data in coordinator.data.get("keys", []):
+    for idx, key_data in enumerate(coordinator.data.get("keys", []), 1):
         key_hash = key_data["hash"]
-        key_label = key_data.get("label") or key_data.get("name") or key_hash[:8]
+        label = key_data.get("label") or ""
+        name = key_data.get("name") or ""
+        if label:
+            key_label = label
+        elif name and not name.startswith("sk-"):
+            key_label = name
+        else:
+            key_label = f"Key {idx}"
         for desc in KEY_SENSORS:
             sensor_name = f"{key_label} {KEY_SENSOR_NAMES[desc.key]}"
             entities.append(
