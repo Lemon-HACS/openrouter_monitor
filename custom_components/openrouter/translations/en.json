@@ -65,7 +65,8 @@
           "weekly": "Weekly",
           "monthly": "Monthly"
         }
-      }
+      },
+      "last_fetched": { "name": "Last Fetched" }
     }
   },
   "selector": {

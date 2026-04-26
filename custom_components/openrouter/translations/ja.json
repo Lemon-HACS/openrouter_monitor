@@ -65,7 +65,8 @@
           "weekly": "毎週",
           "monthly": "毎月"
         }
-      }
+      },
+      "last_fetched": { "name": "最終更新" }
     }
   },
   "selector": {

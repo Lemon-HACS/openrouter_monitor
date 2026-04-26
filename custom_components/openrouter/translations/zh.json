@@ -65,7 +65,8 @@
           "weekly": "每周",
           "monthly": "每月"
         }
-      }
+      },
+      "last_fetched": { "name": "最后更新" }
     }
   },
   "selector": {

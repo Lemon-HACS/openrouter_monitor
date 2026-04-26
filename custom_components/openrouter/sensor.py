@@ -70,6 +70,13 @@ ACCOUNT_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
         state_class=SensorStateClass.TOTAL,
         suggested_display_precision=4,
     ),
+    OpenRouterSensorDescription(
+        key="last_fetched",
+        value_fn=lambda d: d.get("last_fetched"),
+        device_class=SensorDeviceClass.TIMESTAMP,
+        state_class=None,
+        suggested_display_precision=None,
+    ),
 )
 
 KEY_SENSORS: tuple[OpenRouterSensorDescription, ...] = (
@@ -133,7 +140,10 @@ async def async_setup_entry(
 
     for desc in ACCOUNT_SENSORS:
         entities.append(OpenRouterSensor(coordinator, desc, entry))
-        if has_exchange:
+        if has_exchange and desc.device_class not in (
+            SensorDeviceClass.ENUM,
+            SensorDeviceClass.TIMESTAMP,
+        ):
             entities.append(
                 OpenRouterSensor(
                     coordinator, desc, entry,
@@ -204,6 +214,9 @@ class OpenRouterSensor(CoordinatorEntity[OpenRouterCoordinator], SensorEntity):
             self._attr_device_class = SensorDeviceClass.ENUM
             self._attr_translation_key = description.key
             self._attr_options = description.options
+        elif description.device_class == SensorDeviceClass.TIMESTAMP:
+            self._attr_device_class = SensorDeviceClass.TIMESTAMP
+            self._attr_translation_key = description.key
         elif converted:
             self._attr_translation_key = f"{description.key}_converted"
             self._attr_translation_placeholders = {"currency": currency}

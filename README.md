@@ -44,7 +44,7 @@ Monitor your [OpenRouter](https://openrouter.ai) balance and usage in Home Assis
 
 ### 계정 (OpenRouter)
 
-잔액, 총 사용량(누적), 총 일일/주간/월간 사용량(전체 Key 합산)
+잔액, 총 사용량(누적), 총 일일/주간/월간 사용량(전체 Key 합산), 마지막 갱신 시각
 
 ### Key별 (OpenRouter - {Key 이름})
 

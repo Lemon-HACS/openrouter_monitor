@@ -65,7 +65,8 @@
           "weekly": "매주",
           "monthly": "매월"
         }
-      }
+      },
+      "last_fetched": { "name": "마지막 갱신" }
     }
   },
   "selector": {
